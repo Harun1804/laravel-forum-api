@@ -26,10 +26,7 @@ class FeedController extends ApiController
     {
         DB::beginTransaction();
         try {
-            Feed::create([
-                'user_id' => Auth::id(),
-                'content' => $request->content,
-            ]);
+            Auth::user()->feeds()->create($request->validated());
             DB::commit();
             return $this->successResponse(null, 'Feed created successfully', 201);
         } catch (\Exception $e) {
