@@ -28,7 +28,7 @@ class AuthController extends ApiController
                 'password'  => $request->validated('password'),
             ]);
             DB::commit();
-            return $this->successReponse(null, 'User registered successfully', 201);
+            return $this->successResponse(null, 'User registered successfully', 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->errorResponse( $e->getMessage());
@@ -46,7 +46,7 @@ class AuthController extends ApiController
                 $user   = Auth::user();
                 $token  = $user->createToken('authToken')->plainTextToken;
                 DB::commit();
-                return $this->successReponse([
+                return $this->successResponse([
                     'user'  => $user,
                     'type'  => 'Bearer',
                     'token' => $token,
@@ -64,7 +64,7 @@ class AuthController extends ApiController
         try {
             $request->user()->currentAccessToken()->delete();
             DB::commit();
-            return $this->successReponse(null, 'User logged out successfully');
+            return $this->successResponse(null, 'User logged out successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->errorResponse( $e->getMessage());

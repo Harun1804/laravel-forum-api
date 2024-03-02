@@ -15,7 +15,7 @@ trait HasApiResponse
         'result' => null
     ];
 
-    public static function successReponse($data = null, $message = null, $code = 200)
+    public static function successResponse($data = null, $message = null, $code = 200)
     {
         self::$response['meta']['code']      = $code;
         self::$response['meta']['message']   = $message;
