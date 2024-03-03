@@ -24,4 +24,5 @@ Route::prefix('/auth')->controller(AuthController::class)->group(function(){
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('feeds', FeedController::class);
+    Route::get('/feeds/{feed}/like', [FeedController::class, 'likeFeed']);
 });
