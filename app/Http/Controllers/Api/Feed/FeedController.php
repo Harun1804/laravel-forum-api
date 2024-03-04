@@ -70,26 +70,4 @@ class FeedController extends ApiController
             return $this->errorResponse($e->getMessage());
         }
     }
-
-    public function likeFeed(Feed $feed)
-    {
-        DB::beginTransaction();
-        try {
-            $user = Auth::user();
-            $status = "";
-            if($user->likes->contains($feed->id)) {
-                $user->likes()->detach($feed->id);
-                $status = "unliked";
-            } else {
-                $user->likes()->attach($feed->id);
-                $status = "liked";
-            }
-            DB::commit();
-            return $this->successResponse(null, "Feed has been {$status} successfully");
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return $this->errorResponse($e->getMessage());
-        }
-    }
 }
