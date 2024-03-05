@@ -15,7 +15,7 @@ class FeedController extends ApiController
     public function index(Request $request)
     {
         try {
-            $feeds = Feed::with('user')->get();
+            $feeds = Feed::with('user')->latest()->get();
             return $this->successResponse($feeds, 'Feeds retrieved successfully');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
