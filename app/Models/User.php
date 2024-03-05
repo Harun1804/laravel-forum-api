@@ -52,6 +52,11 @@ class User extends Authenticatable
 
     public function likes()
     {
-        return $this->belongsToMany(Feed::class, 'feed_like', 'user_id', 'feed_id');
+        return $this->belongsToMany(Feed::class, 'feed_like', 'user_id', 'feed_id')->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(Feed::class, 'feed_comments', 'user_id', 'feed_id')->withPivot('body')->withTimestamps();
     }
 }

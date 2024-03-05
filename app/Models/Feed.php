@@ -22,6 +22,11 @@ class Feed extends Model
 
     public function likes()
     {
-        return $this->belongsToMany(User::class, 'feed_like', 'feed_id', 'user_id');
+        return $this->belongsToMany(User::class, 'feed_like', 'feed_id', 'user_id')->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(User::class, 'feed_comments', 'feed_id', 'user_id')->withPivot('body')->withTimestamps();
     }
 }

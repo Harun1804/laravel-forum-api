@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Feed\FeedController;
 use App\Http\Controllers\Api\Feed\LikeController;
+use App\Http\Controllers\Api\Feed\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,5 @@ Route::prefix('/auth')->controller(AuthController::class)->group(function(){
 Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('feeds', FeedController::class);
     Route::get('/feeds/{feed}/like', LikeController::class);
+    Route::post('/feeds/{feed}/comment', CommentController::class);
 });

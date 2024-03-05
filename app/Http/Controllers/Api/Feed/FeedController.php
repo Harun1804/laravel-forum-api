@@ -5,17 +5,17 @@ namespace App\Http\Controllers\Api\Feed;
 use App\Models\Feed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\Feed\StoreFeedRequest;
 use App\Http\Requests\Api\Feed\UpdateFeedRequest;
-use Illuminate\Support\Facades\Auth;
 
 class FeedController extends ApiController
 {
     public function index(Request $request)
     {
         try {
-            $feeds = Feed::with('user')->withCount('likes')->latest()->get();
+            $feeds = Feed::with('user')->withCount(['likes', 'comments'])->latest()->get();
             return $this->successResponse($feeds, 'Feeds retrieved successfully');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
@@ -38,7 +38,8 @@ class FeedController extends ApiController
     public function show(Feed $feed)
     {
         try {
-            $feed->load('user');
+            $feed->load(['user:id,name', 'comments:id,name']);
+            $feed->loadCount('likes');
             return $this->successResponse($feed, 'Feed retrieved successfully');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
