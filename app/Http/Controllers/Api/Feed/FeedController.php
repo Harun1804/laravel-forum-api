@@ -39,7 +39,7 @@ class FeedController extends ApiController
     {
         try {
             $feed->load(['user:id,name', 'comments:id,name']);
-            $feed->loadCount('likes');
+            $feed->loadCount('likes', 'comments');
             return $this->successResponse($feed, 'Feed retrieved successfully');
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage());
